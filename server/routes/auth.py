@@ -26,7 +26,7 @@ async def signin(user: LoginSchema, request: Request, response: Response):
     try:
         token = create_access_token(user_id=user_exists.id)
 
-        response.set_cookie(key="access_token", value=token, httponly=True, samesite='lax', secure=True)
+        response.set_cookie(key="access_token", value=token, httponly=True, samesite='none', secure=True)
 
         return {"message": "success"}
             
@@ -51,7 +51,7 @@ async def create_user(user: UserSchema, request: Request, response: Response):
         await db.refresh(new_user)
 
         token = create_access_token(user_id=new_user.id)
-        response.set_cookie(key="access_token", value=token, httponly=True, samesite='lax', secure=True)
+        response.set_cookie(key="access_token", value=token, httponly=True, samesite='none', secure=True)
         return {"token": token}
     except Exception as e:
         await db.rollback()
@@ -59,5 +59,5 @@ async def create_user(user: UserSchema, request: Request, response: Response):
     
 @router.get("/logout")
 async def logout_user(response: Response):
-    response.set_cookie(key="access_token", value="", httponly=True, samesite='lax', secure=True, expires=0, max_age=0)
+    response.set_cookie(key="access_token", value="", httponly=True, samesite='none', secure=True, expires=0, max_age=0)
     return {"message": "User Logged out successfully"}
