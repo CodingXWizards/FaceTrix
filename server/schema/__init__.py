@@ -1,1 +1,1 @@
-from .user import User as UserSchema, Login as LoginSchema
+from .user import User as UserSchema, Login as LoginSchema, UserType

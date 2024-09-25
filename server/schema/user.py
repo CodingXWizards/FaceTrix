@@ -8,14 +8,13 @@ class UserType(Enum):
     SUPER = 'SUPER'
 
 class User(BaseModel):
-    id: UUID
-    type: UserType
+    user_type: UserType
     name: str
+    password: str
     email: EmailStr
     phone_number: str
     designation: str
 
 class Login(BaseModel):
-    email: EmailStr | None
-    phone_number: str | None
+    email: EmailStr
     password: str
