@@ -3,6 +3,7 @@ import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { LucideLoader2 } from "lucide-vue-next";
 import { useLoading } from "@/composables/useLoading";
+import { useAuthStore } from "@/store/authStore";
 
 const credentials = reactive<{ email: string; password: string }>({
   email: "",
@@ -10,6 +11,7 @@ const credentials = reactive<{ email: string; password: string }>({
 });
 
 const router = useRouter();
+const authStore = useAuthStore();
 
 const { loading, withLoading } = useLoading();
 const error = ref<string | null>(null);
@@ -20,6 +22,7 @@ function handleSubmit(event: Event) {
   withLoading(async () => {
     const response = await fetch("http://localhost:8000/api/auth/signin", {
       method: "POST",
+      credentials: 'include',
       headers: {
         "Content-Type": "application/json",
       },
@@ -29,6 +32,7 @@ function handleSubmit(event: Event) {
       }),
     });
     const body = await response.json();
+    console.log(body)
     if (response.status !== 200) {
       error.value = body.detail;
       const errorElement = document.getElementById("error");
@@ -38,8 +42,7 @@ function handleSubmit(event: Event) {
       }, 5000);
       return;
     }
-    
-    router.push('/');
+    router.push("/");
   });
 }
 </script>
