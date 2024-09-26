@@ -3,7 +3,6 @@ from pydantic import BaseModel
 
 class Camera(BaseModel):
     id: UUID
-    username: str
     ip_address: str
     password: str
     port: int

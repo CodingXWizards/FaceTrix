@@ -9,7 +9,6 @@ class User(Base):
     __tablename__ = "camera"
 
     id = Column(UUID(as_uuid=True), primary_key=True, index=True, default=uuid4)
-    username = Column(String)
     ip_address = Column(String, index=True)
     password = Column(String)
     port = Column(int, index=True)
@@ -25,7 +24,6 @@ class User(Base):
     def public_data(self):
         return {
             "id": self.id,
-            "username": self.username,
             "ipaddress": self.ipaddress,
             "password": self.password,
             "port": self.port,
