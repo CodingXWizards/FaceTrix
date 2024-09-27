@@ -72,15 +72,28 @@ function handleSubmit(e: Event) {
             }
             snackMesg.value = "Camera Added Successfully";
             snackbar.value = true;
-            handleReset();
+            // handleReset();
+            data.id = "";
+            data.username = "";
+            data.ipAddress = "";
+            data.password = "";
+            data.port = 554;
+            data.channel = 0;
+            data.subType = 0;
+            data.latitude = props.lat;
+            data.longitude = props.lng;
+            data.azimuth = 30;
+            data.status = "";
+            data.thana = "";
         } catch (error) {
+            console.log(error)
             snackMesg.value = "Something went wrong";
             snackbar.value = true;
         }
     })
 };
 
-function handleReset(e?: Event) {
+function handleReset(e: Event) {
     e!.preventDefault();
     data.id = "";
     data.username = "";
@@ -134,8 +147,7 @@ function handleReset(e?: Event) {
             <button type="reset"
                 class="py-2 px-5 text-sm bg-red-500 hover:bg-red-600 transition text-white rounded-md">Reset</button>
         </div>
-        <v-snackbar v-model="snackbar" color="deep-purple-accent-4"
-        elevation="24">
+        <v-snackbar v-model="snackbar" color="deep-purple-accent-4" elevation="24">
             {{ snackMesg }}
         </v-snackbar>
     </form>

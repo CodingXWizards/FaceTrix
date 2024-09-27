@@ -6,7 +6,7 @@ import Navbar from "@/components/Navbar.vue";
 import { LucideEye, LucidePlus } from "lucide-vue-next";
 import { ref } from "vue";
 
-const activeSection = ref<'VIEW' | 'ADD' | 'UPDATE'>('ADD');
+const activeSection = ref<'VIEW' | 'ADD' | 'UPDATE'>('VIEW');
 const lat = ref(21.170240);
 const lng = ref(81.646880);
 
@@ -25,11 +25,9 @@ function handleUpdate({ newLat, newLng }: { newLat: number, newLng: number }) {
                 <h2>Camera</h2>
                 <div class="flex gap-x-4">
                     <LucidePlus @click="activeSection = 'ADD'"
-                        :class="activeSection === 'ADD' && 'bg-gray-800 hover:bg-opacity-100'"
-                        class="bg-orange-600 hover:bg-opacity-90 p-2 size-9 text-white rounded-md" />
+                        :class="'p-2 size-9 text-white rounded-md ' + (activeSection === 'ADD' ? 'bg-gray-800 hover:bg-opacity-100' : 'bg-orange-600 hover:bg-opacity-90')" />
                     <LucideEye @click="activeSection = 'VIEW'"
-                        :class="activeSection === 'VIEW' && 'bg-gray-800 hover:bg-opacity-100'"
-                        class="bg-orange-600 hover:bg-opacity-90 p-2 size-9 text-white rounded-md" />
+                        :class="'p-2 size-9 text-white rounded-md ' + (activeSection === 'VIEW' ? 'bg-gray-800 hover:bg-opacity-100' : 'bg-orange-600 hover:bg-opacity-90')" />
                 </div>
             </header>
             <section class="w-full flex flex-grow gap-x-2">
