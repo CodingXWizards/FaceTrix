@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
 import Input from '../Input.vue';
-import { Camera } from '@/types/camera';
+import { Camera, Status } from '@/types/camera';
 import { watch } from 'vue';
 import { useLoading } from '@/composables/useLoading';
 import { LucideLoader2 } from 'lucide-vue-next';
@@ -20,7 +20,7 @@ const data = reactive<Camera>({
     latitude: props.lat,
     longitude: props.lng,
     azimuth: 30,
-    status: "",
+    status: Status.ACTIVE,
     thana: "",
 });
 
@@ -46,7 +46,7 @@ function handleSubmit(e: Event) {
     e.preventDefault();
     withLoading(async () => {
         try {
-
+            console.log(data.status)
             const response = await fetch("http://localhost:8000/api/camera", {
                 method: 'POST',
                 credentials: 'include',
@@ -86,7 +86,7 @@ function handleSubmit(e: Event) {
             data.latitude = props.lat;
             data.longitude = props.lng;
             data.azimuth = 30;
-            data.status = "";
+            data.status = Status.ACTIVE;
             data.thana = "";
         } catch (error) {
             console.log(error)
@@ -108,7 +108,7 @@ function handleReset(e: Event) {
     data.latitude = props.lat;
     data.longitude = props.lng;
     data.azimuth = 30;
-    data.status = "";
+    data.status = Status.ACTIVE;
     data.thana = "";
 }
 
@@ -143,14 +143,23 @@ function handleReset(e: Event) {
             </div>
             <div class="flex gap-x-2">
                 <Input id="thana" label="Thana" v-model:value="data.thana" placeholder="thana" />
-                <Input id="status" label="Status" v-model:value="data.status" placeholder="active" />
+                <div class="w-full flex flex-col">
+                    <label for="status">Status</label>
+                    <select name="status" id="status"
+                        @change="(e: Event) => data.status = (e.target as HTMLSelectElement).value as Status"
+                        style="border-color: #9ca3af !important;"
+                        class="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:border-orange-500">
+                        <option value="ACTIVE">ACTIVE</option>
+                        <option value="INACTIVE">INACTIVE</option>
+                    </select>
+                </div>
             </div>
         </div>
         <div class="w-full flex gap-x-4">
             <button type="submit"
                 class="py-2 px-5 text-sm bg-orange-500 hover:bg-orange-600 transition text-white rounded-md">
                 <LucideLoader2 v-if="loading" class="size-5 animate-spin mx-auto" />
-                <span v-else>Login</span>
+                <span v-else>Save</span>
             </button>
             <button type="reset"
                 class="py-2 px-5 text-sm bg-red-500 hover:bg-red-600 transition text-white rounded-md">Reset</button>

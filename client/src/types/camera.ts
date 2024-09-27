@@ -1,3 +1,8 @@
+export enum Status{
+    ACTIVE = 'ACTIVE',
+    INACTIVE = 'INACTIVE'
+}
+
 export interface Camera {
     id: string;
     username: string;
@@ -9,6 +14,6 @@ export interface Camera {
     latitude: number;
     longitude: number;
     azimuth: number;
-    status: string;
+    status: Status;
     thana: string;
 }

@@ -4,6 +4,7 @@ import './camera.css';
 import { ref, watchEffect } from 'vue';
 import { Camera } from '@/types/camera';
 import { LucideLoader2 } from 'lucide-vue-next';
+import { Status } from '@/types/camera';
 
 const { loading, withLoading } = useLoading();
 
@@ -49,12 +50,16 @@ watchEffect(() => {
                     <td>{{ camera.latitude + ", " + camera.longitude }}</td>
                     <td>{{ camera.azimuth }}</td>
                     <td>{{ camera.thana }}</td>
-                    <td>{{ camera.status }}</td>
+                    <td>
+                        <p :style='camera.status.toUpperCase() === "ACTIVE" ? "background-color: #86efac; color: #16a34a; border-color: #16a34a" : "background-color: #fca5a5; color: #dc2626; border-color: #dc2626"'
+                            class='p-2 px-2 h-7 flex border red-300 items-center justify-center font- rounded'>
+                            {{ camera.status.toUpperCase() }}</p>
+                    </td>
                 </tr>
             </tbody>
         </table>
         <div v-else class="h-full flex items-center justify-center">
-            <LucideLoader2 class="mx-auto size-7 animate-spin"/>
+            <LucideLoader2 class="mx-auto size-7 animate-spin" />
         </div>
     </form>
 </template>
