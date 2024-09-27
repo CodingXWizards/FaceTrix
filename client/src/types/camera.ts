@@ -3,12 +3,12 @@ export interface Camera {
     username: string;
     ipAddress: string;
     password: string;
-    port: number | null;
-    channel: string;
-    subType: string;
-    latitude: number | null;
-    longitude: number | null;
-    azimuth: number | null;
+    port: number;
+    channel: number;
+    subType: number;
+    latitude: number;
+    longitude: number;
+    azimuth: number;
     status: string;
     thana: string;
 }

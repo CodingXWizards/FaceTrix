@@ -20,7 +20,7 @@ function handleChange(e: Event) {
 <template>
   <div class="w-full">
     <label class="block" for="password">{{ label }}</label>
-    <input :id="id" type="text" :value="value" @change="handleChange" :placeholder="placeholder" />
+    <input :id="id" type="text" :value="value" @change="handleChange" :placeholder="placeholder" required/>
   </div>
 </template>
 
