@@ -13,8 +13,8 @@ pydantic-settings = "*"
 python-jose = "*"
 psycopg2-binary = "*"
 passlib = "*"
+bcrypt = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.10"

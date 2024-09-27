@@ -4,6 +4,7 @@ import { Component } from 'vue';
 import Home from '@/pages/Home.vue';
 import Login from '@/pages/Login.vue';
 import Camera from '@/pages/Camera.vue';
+import WhatsappBot from '@/pages/WhatsappBot.vue';
 
 interface Routes {
     path: string;
@@ -22,7 +23,11 @@ const routes: Routes[] = [
     {
         path: '/camera',
         component: Camera
-    }
+    },
+    {
+        path: '/whatsapp-bot',
+        component: WhatsappBot
+      }
 ];
 
 const router = createRouter({

@@ -29,10 +29,23 @@ async function handleLogout() {
         <p class="text-xs">{{ authStore.user?.designation }}</p>
       </div>
     </div>
-    <button class="p-2 px-4 bg-red-600 rounded-lg text-white text-sm" @click="handleLogout">
-      Logout
-    </button>
+    <div class="flex items-center gap-x-6">
+      <RouterLink to="/" class="nav-link">Home</RouterLink>
+      <RouterLink to="/camera" class="nav-link">Camera</RouterLink>
+      <RouterLink to="/whatsapp-bot" class="nav-link">Whatsapp Bot</RouterLink>
+      <button class="p-2 px-4 bg-red-600 rounded-lg text-white text-sm" @click="handleLogout">
+        Logout
+      </button>
+    </div>
   </nav>
 </template>
 
-<style scoped></style>
+<style scoped>
+.nav-link {
+  @apply text-gray-700 hover:text-orange-500 transition-colors;
+}
+
+.router-link-active {
+  @apply text-orange-500 font-semibold;
+}
+</style>
