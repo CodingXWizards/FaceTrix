@@ -1,14 +1,16 @@
 from uuid import uuid4
-from sqlalchemy import Column, String, Integer, Float
+from sqlalchemy import Column, String, Integer, Float, Enum
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.dialects.postgresql import UUID
 
+from schema import CamType
 from db import Base
 
 class Camera(Base):
     __tablename__ = "camera"
 
     id = Column(UUID(as_uuid=True), primary_key=True, index=True, default=uuid4)
+    cam_type = Column(Enum(CamType))
     ip_address = Column(String, index=True)
     username = Column(String, index=True)
     password = Column(String)

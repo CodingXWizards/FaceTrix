@@ -4,6 +4,7 @@ import Input from '../Input.vue';
 import { Camera } from '@/types/camera';
 import { watch } from 'vue';
 import { useLoading } from '@/composables/useLoading';
+import { LucideLoader2 } from 'lucide-vue-next';
 
 const props = defineProps<{ lng: number, lat: number }>();
 const { loading, withLoading } = useLoading();
@@ -25,6 +26,7 @@ const data = reactive<Camera>({
 
 const snackMesg = ref<string>("");
 const snackbar = ref<boolean>(false);
+const type = ref<'RTSP' | 'IP'>('RTSP');
 
 watch(
     () => props.lat,
@@ -53,11 +55,12 @@ function handleSubmit(e: Event) {
                 },
                 body: JSON.stringify({
                     ip_address: data.ipAddress,
-                    username: data.username,
-                    password: data.password,
+                    cam_type: type.value,
+                    username: (type.value === 'RTSP' ? data.username : null),
+                    password: (type.value === 'RTSP' ? data.password : null),
                     port: data.port,
-                    channel: data.channel,
-                    subtype: data.subType,
+                    channel: (type.value === 'RTSP' ? data.channel : null),
+                    subtype: (type.value === 'RTSP' ? data.subType : null),
                     latitude: data.latitude,
                     longitude: data.longitude,
                     azimuth: data.azimuth,
@@ -116,22 +119,24 @@ function handleReset(e: Event) {
         <header class="flex justify-between items-center gap-x-5">
             <h3>Add Camera</h3>
             <div class="w-[160px] flex items-center">
-                <v-select :items="['RTSP', 'IP Address']" class="h-[40px]" density="compact" variant="outlined"
-                    label="Select Format" model-value="RTSP"></v-select>
+                <v-select :items="['RTSP', 'IP']" class="h-[40px]" density="compact" variant="outlined"
+                    label="Select Format" v-model:model-value="type"></v-select>
             </div>
         </header>
         <div class="flex flex-col gap-y-3">
-            <div class="flex gap-x-2">
+            <div class="flex gap-x-2" v-if="type === 'RTSP'">
                 <Input id="username" label="Username" v-model:value="data.username" placeholder="username" />
                 <Input id="password" label="Password" v-model:value="data.password" placeholder="password" />
             </div>
             <div class="flex gap-x-2">
                 <Input id="ip" label="IP Address" v-model:value="data.ipAddress" placeholder="0.0.0.0" />
                 <Input id="port" label="Port" v-model:value="data.port" placeholder="554" />
-                <Input id="channel" label="Channel" v-model:value="data.channel" placeholder="1" />
+                <Input v-if="type === 'RTSP'" id="channel" label="Channel" v-model:value="data.channel"
+                    placeholder="1" />
             </div>
             <div class="flex gap-x-2">
-                <Input id="subtype" label="Subtype" v-model:value="data.subType" placeholder="0" />
+                <Input v-if="type === 'RTSP'" id="subtype" label="Subtype" v-model:value="data.subType"
+                    placeholder="0" />
                 <Input id="latitude" label="Latitude" v-model:value="data.latitude" placeholder="0" />
                 <Input id="longitude" label="Longitude" v-model:value="data.longitude" placeholder="0" />
                 <Input id="azimuth" label="Azimuth" v-model:value="data.azimuth" placeholder="0" />
@@ -143,7 +148,10 @@ function handleReset(e: Event) {
         </div>
         <div class="w-full flex gap-x-4">
             <button type="submit"
-                class="py-2 px-5 text-sm bg-orange-500 hover:bg-orange-600 transition text-white rounded-md">Save</button>
+                class="py-2 px-5 text-sm bg-orange-500 hover:bg-orange-600 transition text-white rounded-md">
+                <LucideLoader2 v-if="loading" class="size-5 animate-spin mx-auto" />
+                <span v-else>Login</span>
+            </button>
             <button type="reset"
                 class="py-2 px-5 text-sm bg-red-500 hover:bg-red-600 transition text-white rounded-md">Reset</button>
         </div>

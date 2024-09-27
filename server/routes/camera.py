@@ -36,6 +36,7 @@ async def get_camera(data: CameraSchema, request: Request):
 
         new_camera = Camera(username=data.username,
             password=data.password,
+            cam_type=data.cam_type,
             ip_address=data.ip_address,
             port=data.port,
             channel=data.channel,
