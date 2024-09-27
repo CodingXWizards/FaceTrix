@@ -1,22 +1,23 @@
 from uuid import uuid4
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, Integer, Float
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.dialects.postgresql import UUID
 
 from db import Base
 
-class User(Base):
+class Camera(Base):
     __tablename__ = "camera"
 
     id = Column(UUID(as_uuid=True), primary_key=True, index=True, default=uuid4)
     ip_address = Column(String, index=True)
+    username = Column(String, index=True)
     password = Column(String)
-    port = Column(int, index=True)
-    channel = Column(int,index=True)
-    subtype = Column(int,index=True)
-    latitude = Column(float,index=True)
-    longitute = Column(float,index=True)
-    azimuth = Column(int,index=True)
+    port = Column(Integer, index=True)
+    channel = Column(Integer,index=True)
+    subtype = Column(Integer,index=True)
+    latitude = Column(Float,index=True)
+    longitude = Column(Float,index=True)
+    azimuth = Column(Integer,index=True)
     status = Column(String,index=True)
     thana = Column(String,index=True)
 
@@ -24,13 +25,14 @@ class User(Base):
     def public_data(self):
         return {
             "id": self.id,
-            "ipaddress": self.ipaddress,
+            "ip_address": self.ip_address,
+            "username": self.username,
             "password": self.password,
             "port": self.port,
             "channel":self.channel,
             "subtype":self.subtype,
             "latitude":self.latitude,
-            "longitude":self.longitute,
+            "longitude":self.longitude,
             "azimuth":self.azimuth,
             "status":self.status,
             "thana":self.thana
