@@ -5,6 +5,7 @@ import Home from '@/pages/Home.vue';
 import Login from '@/pages/Login.vue';
 import Camera from '@/pages/Camera.vue';
 import WhatsappBot from '@/pages/WhatsappBot.vue';
+import Criminal from '@/pages/Criminal.vue';
 
 interface Routes {
     path: string;
@@ -27,6 +28,10 @@ const routes: Routes[] = [
     {
         path: '/whatsapp-bot',
         component: WhatsappBot
+      },
+      {
+        path: '/criminal',
+      component: Criminal,
       }
 ];
 

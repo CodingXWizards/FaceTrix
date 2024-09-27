@@ -1,8 +1,8 @@
-from uuid import UUID
 from pydantic import BaseModel
 from datetime import date, time
-class Camera(BaseModel):
-    id: UUID
+from uuid import UUID
+
+class CriminalSchema(BaseModel):
     criminalname: str
     crimes: str
     date: date
@@ -11,3 +11,9 @@ class Camera(BaseModel):
     cameraid: int
     thana: str
     images: str
+
+class CriminalResponse(CriminalSchema):
+    id: UUID
+
+    class Config:
+        orm_mode = True
