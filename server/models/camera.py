@@ -27,7 +27,7 @@ class Camera(Base):
     def public_data(self):
         return {
             "id": self.id,
-            "ip_address": self.ip_address,
+            "ipAddress": self.ip_address,
             "username": self.username,
             "password": self.password,
             "port": self.port,

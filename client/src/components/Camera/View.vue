@@ -1,28 +1,35 @@
 <script setup lang="ts">
+import { useLoading } from '@/composables/useLoading';
 import './camera.css';
+import { ref, watchEffect } from 'vue';
+import { Camera } from '@/types/camera';
+import { LucideLoader2 } from 'lucide-vue-next';
 
-const data: {
-    id: number,
-    ip: string;
-    port: number;
-    gr: string;
-    azimuth: number,
-    thana: string
-}[] = [
-        { id: 1, ip: '0.0.0.0', port: 545, gr: '21, 81', azimuth: 80, thana: 'Bhilai' },
-        { id: 1, ip: '0.0.0.0', port: 545, gr: '21, 81', azimuth: 80, thana: 'Bhilai' },
-        { id: 1, ip: '0.0.0.0', port: 545, gr: '21, 81', azimuth: 80, thana: 'Bhilai' },
-        { id: 1, ip: '0.0.0.0', port: 545, gr: '21, 81', azimuth: 80, thana: 'Bhilai' },
-        { id: 1, ip: '0.0.0.0', port: 545, gr: '21, 81', azimuth: 80, thana: 'Bhilai' },
-        { id: 1, ip: '0.0.0.0', port: 545, gr: '21, 81', azimuth: 80, thana: 'Bhilai' },
-    ]
+const { loading, withLoading } = useLoading();
+
+const cameras = ref<Camera[] | null>(null);
+const error = ref<string | null>(null);
+
+async function fetchAllCameras() {
+    try {
+        const response = await fetch("http://localhost:8000/api/camera/", { method: 'GET', credentials: 'include' });
+        const body = await response.json();
+        cameras.value = body;
+    } catch (err: any) {
+        error.value = err.message;
+    }
+}
+
+watchEffect(() => {
+    withLoading(fetchAllCameras);
+})
 
 </script>
 
 <template>
-    <form>
+    <form class="h-full">
         <h3>All Camera</h3>
-        <table border="1">
+        <table v-if="!loading" border="1">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -31,19 +38,24 @@ const data: {
                     <th>GR</th>
                     <th>Azimuth</th>
                     <th>Thana</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="ele in data" :key="ele.id">
-                    <td>{{ ele.id }}</td>
-                    <td>{{ ele.ip }}</td>
-                    <td>{{ ele.port }}</td>
-                    <td>{{ ele.gr }}</td>
-                    <td>{{ ele.azimuth }}</td>
-                    <td>{{ ele.thana }}</td>
+                <tr v-for="camera in cameras" :key="camera.id">
+                    <td>{{ camera.id }}</td>
+                    <td>{{ camera.ipAddress }}</td>
+                    <td>{{ camera.port }}</td>
+                    <td>{{ camera.latitude + ", " + camera.longitude }}</td>
+                    <td>{{ camera.azimuth }}</td>
+                    <td>{{ camera.thana }}</td>
+                    <td>{{ camera.status }}</td>
                 </tr>
             </tbody>
         </table>
+        <div v-else class="h-full flex items-center justify-center">
+            <LucideLoader2 class="mx-auto size-7 animate-spin"/>
+        </div>
     </form>
 </template>
 
@@ -63,10 +75,14 @@ td {
 }
 
 th, td {
-    @apply p-1.5 text-center rounded-md text-gray-700
+    @apply p-1.5 text-center rounded-md text-gray-700 min-w-[100px]
 }
 
 th {
-    @apply font-medium text-gray-900
+    @apply font-medium text-gray-900 text-sm
+}
+
+td {
+    @apply text-xs
 }
 </style>

@@ -31,7 +31,7 @@ function handleUpdate({ newLat, newLng }: { newLat: number, newLng: number }) {
                 </div>
             </header>
             <section class="w-full flex flex-grow gap-x-2">
-                <div :class="activeSection === 'VIEW' ? 'basis-1/2' : 'basis-1/3'" class="transition-all duration-500">
+                <div :class="activeSection === 'VIEW' ? 'basis-1/2' : 'basis-1/3'" class="transition-all duration-500 overflow-auto">
                     <CameraAdd :lng="lng" :lat="lat" v-if="activeSection == 'ADD'" />
                     <CameraView v-if="activeSection == 'VIEW'" />
                 </div>
