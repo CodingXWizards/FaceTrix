@@ -3,8 +3,11 @@ import CameraAdd from "@/components/Camera/Add.vue";
 import CameraView from "@/components/Camera/View.vue";
 import GoogleMaps from "@/components/GoogleMaps.vue";
 import Navbar from "@/components/Navbar.vue";
+import { useFetch } from "@/composables/useFetch";
+import { Camera } from "@/types/camera";
+import { Marker } from "@/types/marker";
 import { LucideEye, LucidePlus } from "lucide-vue-next";
-import { ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 
 const activeSection = ref<'VIEW' | 'ADD' | 'UPDATE'>('VIEW');
 const lat = ref(21.170240);
@@ -14,6 +17,20 @@ function handleUpdate({ newLat, newLng }: { newLat: number, newLng: number }) {
     lat.value = newLat;
     lng.value = newLng;
 }
+
+const markers = ref<Marker[]>([]);
+
+const { data: cameras, isLoading, fetchData } = useFetch<Camera[]>('/api/camera/', { method: 'GET' });
+
+onMounted(() => {
+    fetchData();
+});
+
+watch(cameras, (newValue, _) => {
+    if (newValue && newValue.length > 0) {
+        markers.value = newValue.map((camera: Camera) => ({ id: camera.id, latitude: camera.latitude, longitude: camera.longitude, azimuth: camera.azimuth }));
+    }
+})
 
 </script>
 
@@ -34,11 +51,11 @@ function handleUpdate({ newLat, newLng }: { newLat: number, newLng: number }) {
                 <div :class="activeSection === 'VIEW' ? 'basis-1/2' : 'basis-1/3'"
                     class="transition-all duration-500 overflow-auto">
                     <CameraAdd :lng="lng" :lat="lat" v-if="activeSection == 'ADD'" />
-                    <CameraView v-if="activeSection == 'VIEW'" />
+                    <CameraView :loading="isLoading" :cameras="cameras" v-if="activeSection == 'VIEW'" />
                 </div>
                 <div :class="activeSection === 'VIEW' ? 'basis-1/2' : 'basis-2/3'"
                     class="rounded-lg overflow-hidden h-full transition-all duration-500">
-                    <GoogleMaps :lat="lat" :lng="lng" @update:value="handleUpdate" />
+                    <GoogleMaps :markers="markers" @update:value="handleUpdate" />
                 </div>
             </div>
         </section>

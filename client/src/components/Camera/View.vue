@@ -1,28 +1,12 @@
 <script setup lang="ts">
-import { useLoading } from '@/composables/useLoading';
 import './camera.css';
-import { onMounted, ref } from 'vue';
 import { Camera } from '@/types/camera';
 import { LucideLoader2 } from 'lucide-vue-next';
 
-const { loading, withLoading } = useLoading();
-
-const cameras = ref<Camera[] | null>(null);
-const error = ref<string | null>(null);
-
-async function fetchAllCameras() {
-    try {
-        const response = await fetch("http://localhost:8000/api/camera/", { method: 'GET', credentials: 'include' });
-        const body = await response.json();
-        cameras.value = body;
-    } catch (err: any) {
-        error.value = err.message;
-    }
-}
-
-onMounted(() => {
-    withLoading(fetchAllCameras);
-})
+defineProps<{
+    loading: boolean;
+    cameras: Camera[] | null;
+}>();
 
 </script>
 
@@ -32,7 +16,7 @@ onMounted(() => {
         <table v-if="!loading" border="1">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>S.no</th>
                     <th>IP</th>
                     <th>Port</th>
                     <th>GR</th>
@@ -42,8 +26,8 @@ onMounted(() => {
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="camera in cameras" :key="camera.id">
-                    <td>{{ camera.id }}</td>
+                <tr v-for="camera, index in cameras" :key="camera.id">
+                    <td>{{ index+1 }}</td>
                     <td>{{ camera.ipAddress }}</td>
                     <td>{{ camera.port }}</td>
                     <td>{{ camera.latitude + ", " + camera.longitude }}</td>
