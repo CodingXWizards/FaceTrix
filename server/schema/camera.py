@@ -5,7 +5,9 @@ from enum import Enum
 class CamType(Enum):
     RTSP = 'RTSP'
     IP = 'IP'
-
+class Status(Enum):
+    ACTIVE = 'ACTIVE'
+    INACTIVE = 'INACTIVE'
 class Camera(BaseModel):
     ip_address: str
     cam_type: CamType
@@ -17,5 +19,5 @@ class Camera(BaseModel):
     latitude: float
     longitude: float
     azimuth: int
-    status: str
+    status: Status
     thana: str

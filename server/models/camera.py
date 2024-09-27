@@ -3,7 +3,7 @@ from sqlalchemy import Column, String, Integer, Float, Enum
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.dialects.postgresql import UUID
 
-from schema import CamType
+from schema import CamType, Status
 from db import Base
 
 class Camera(Base):
@@ -20,7 +20,7 @@ class Camera(Base):
     latitude = Column(Float,index=True)
     longitude = Column(Float,index=True)
     azimuth = Column(Integer,index=True)
-    status = Column(String,index=True)
+    status = Column(Enum(Status),index=True)
     thana = Column(String,index=True)
 
     @hybrid_property
