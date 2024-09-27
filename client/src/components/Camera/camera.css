@@ -1,0 +1,3 @@
+form{
+    @apply p-5 px-7 flex flex-col gap-y-4
+}
