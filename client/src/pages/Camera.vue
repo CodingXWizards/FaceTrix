@@ -18,9 +18,9 @@ function handleUpdate({ newLat, newLng }: { newLat: number, newLng: number }) {
 </script>
 
 <template>
-    <main class="h-screen">
+    <main>
         <Navbar />
-        <div class="h-[calc(100vh-3.5rem)] flex-grow px-10 py-5 flex flex-col gap-y-4">
+        <section>
             <header class="flex justify-between items-center">
                 <h2>Camera</h2>
                 <div class="flex gap-x-4">
@@ -30,8 +30,9 @@ function handleUpdate({ newLat, newLng }: { newLat: number, newLng: number }) {
                         :class="'p-2 size-9 text-white rounded-md ' + (activeSection === 'VIEW' ? 'bg-gray-800 hover:bg-opacity-100' : 'bg-orange-600 hover:bg-opacity-90')" />
                 </div>
             </header>
-            <section class="w-full flex flex-grow gap-x-2">
-                <div :class="activeSection === 'VIEW' ? 'basis-1/2' : 'basis-1/3'" class="transition-all duration-500 overflow-auto">
+            <div class="w-full flex flex-grow gap-x-2">
+                <div :class="activeSection === 'VIEW' ? 'basis-1/2' : 'basis-1/3'"
+                    class="transition-all duration-500 overflow-auto">
                     <CameraAdd :lng="lng" :lat="lat" v-if="activeSection == 'ADD'" />
                     <CameraView v-if="activeSection == 'VIEW'" />
                 </div>
@@ -39,8 +40,8 @@ function handleUpdate({ newLat, newLng }: { newLat: number, newLng: number }) {
                     class="rounded-lg overflow-hidden h-full transition-all duration-500">
                     <GoogleMaps :lat="lat" :lng="lng" @update:value="handleUpdate" />
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
     </main>
 </template>
 

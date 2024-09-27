@@ -1,8 +1,8 @@
 <template>
   <main class="min-h-screen flex flex-col bg-gray-100">
     <Navbar />
-    <section class="flex-grow p-5 flex flex-col gap-y-8">
-      <h1 class="text-3xl font-bold text-center text-gray-800">WhatsApp Bot for Criminal Recognition</h1>
+    <section class="">
+      <h2>WhatsApp Bot for Criminal Recognition</h2>
       <div class="flex flex-col md:flex-row justify-around gap-8">
         <div class="w-full md:w-1/2 bg-white rounded-lg shadow-md p-6">
           <h2 class="text-2xl font-semibold mb-4 text-gray-700">Normal User</h2>

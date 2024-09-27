@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { useLoading } from '@/composables/useLoading';
 import './camera.css';
-import { ref, watchEffect } from 'vue';
+import { onMounted, ref } from 'vue';
 import { Camera } from '@/types/camera';
 import { LucideLoader2 } from 'lucide-vue-next';
-import { Status } from '@/types/camera';
 
 const { loading, withLoading } = useLoading();
 
@@ -21,7 +20,7 @@ async function fetchAllCameras() {
     }
 }
 
-watchEffect(() => {
+onMounted(() => {
     withLoading(fetchAllCameras);
 })
 

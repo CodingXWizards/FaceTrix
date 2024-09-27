@@ -17,6 +17,13 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+main{
+  @apply min-h-screen flex flex-col
+}
+section{
+   @apply h-[calc(100vh-3.5rem)] flex-grow px-10 py-5 flex flex-col gap-y-4
+}
+
 h1{
   @apply text-5xl
 }
