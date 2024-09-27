@@ -12,9 +12,12 @@
     "lucide-vue-next": "^0.446.0",
     "pinia": "^2.2.2",
     "vue": "^3.4.37",
-    "vue-router": "^4.4.5"
+    "vue-router": "^4.4.5",
+    "vue3-google-map": "^0.21.0",
+    "vuetify": "^3.7.2"
   },
   "devDependencies": {
+    "@googlemaps/js-api-loader": "^1.16.8",
     "@types/node": "^22.7.0",
     "@vitejs/plugin-vue": "^5.1.2",
     "autoprefixer": "^10.4.20",
