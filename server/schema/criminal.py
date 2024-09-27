@@ -1,6 +1,6 @@
 from uuid import UUID
 from pydantic import BaseModel
-
+from datetime import date, time
 class Camera(BaseModel):
     id: UUID
     criminalname: str
