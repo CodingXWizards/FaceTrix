@@ -22,7 +22,7 @@ function handleSubmit(event: Event) {
   withLoading(async () => {
     const response = await fetch("http://localhost:8000/api/auth/signin", {
       method: "POST",
-      credentials: 'include',
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -32,7 +32,6 @@ function handleSubmit(event: Event) {
       }),
     });
     const body = await response.json();
-    console.log(body)
     if (response.status !== 200) {
       error.value = body.detail;
       const errorElement = document.getElementById("error");
@@ -42,6 +41,8 @@ function handleSubmit(event: Event) {
       }, 5000);
       return;
     }
+    localStorage.setItem("isAuthenticated", 'true');
+    authStore.setIsAuthenticated(true);
     router.push("/");
   });
 }

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted, watch } from "vue";
 import { useAuthStore } from "./store/authStore";
 
 const authStore = useAuthStore();
@@ -18,7 +19,25 @@ async function fetchUser() {
     console.log(error);
   }
 }
-fetchUser();
+
+// Sync localStorage with authStore on page load
+onMounted(() => {
+  const storedAuth = localStorage.getItem("isAuthenticated");
+  if (storedAuth === "true" && !authStore.isAuthenticated) {
+    authStore.isAuthenticated = true;
+  }
+});
+
+// Watch isAuthenticated in the authStore and localStorage
+watch(
+  () => authStore.isAuthenticated,
+  (newValue, _) => {
+    // Fetch user if authenticated
+    if (newValue) {
+      fetchUser();
+    }
+  }
+);
 </script>
 
 <template>
