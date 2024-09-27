@@ -9,14 +9,14 @@ class Criminal(Base):
     __tablename__ = "criminal"
 
     id = Column(UUID(as_uuid=True), primary_key=True, index=True, default=uuid4)
-    criminalname = Column(String,index=True)
-    crimes = Column(Integer,index=True)
-    date = Column(Date,index=True)
-    time=Column(Time,index=True)
-    location = Column(String,index=True)
-    cameraid=Column(Integer,index=True)
-    thana = Column(String,index=True)
-    images=Column(String,index=True)
+    criminalname = Column(String, index=True)
+    crimes = Column(Integer, index=True)
+    date = Column(Date, index=True)
+    time = Column(Time, index=True)
+    location = Column(String, index=True)
+    cameraid = Column(Integer, index=True)
+    thana = Column(String, index=True)
+    images = Column(String, index=True)
 
     @hybrid_property
     def public_data(self):
@@ -26,8 +26,8 @@ class Criminal(Base):
             "crimes": self.crimes,
             "date": self.date,
             "time": self.time,
-            "location":self.location,
-            "cameraid":self.cameraid,
-            "thana":self.thana,
-            "images":self.images
+            "location": self.location,
+            "cameraid": self.cameraid,
+            "thana": self.thana,
+            "images": self.images
         }

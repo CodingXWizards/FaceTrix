@@ -3,6 +3,7 @@ import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
+from routes import criminal
 
 from middleware.db_session_middleware import DBSessionMiddleware
 from db import engine, Base
@@ -36,6 +37,8 @@ app.add_middleware(
 app.add_middleware(DBSessionMiddleware)
 
 app.include_router(router, prefix='/api')
+
+app.include_router(criminal.router, prefix='/api')
 
 if __name__ == '__main__':
     import uvicorn

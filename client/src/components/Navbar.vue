@@ -33,6 +33,7 @@ async function handleLogout() {
       <RouterLink to="/" class="nav-link">Home</RouterLink>
       <RouterLink to="/camera" class="nav-link">Camera</RouterLink>
       <RouterLink to="/whatsapp-bot" class="nav-link">Whatsapp Bot</RouterLink>
+      <RouterLink to="/criminals" class="nav-link">Criminals</RouterLink>
       <button class="p-2 px-4 bg-red-600 rounded-lg text-white text-sm" @click="handleLogout">
         Logout
       </button>
