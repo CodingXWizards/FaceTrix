@@ -2,13 +2,15 @@ from pydantic import BaseModel
 from datetime import date, time
 from uuid import UUID
 
+from .camera import Camera
+
 class CriminalSchema(BaseModel):
     criminalname: str
     crimes: str
     date: date
     time: time
     location: str
-    cameraid: int
+    cameras: list[UUID] | list[Camera]
     thana: str
     images: str
 
