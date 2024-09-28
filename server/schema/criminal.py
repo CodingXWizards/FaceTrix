@@ -10,7 +10,6 @@ class CriminalSchema(BaseModel):
     date: date
     time: time
     location: str
-    cameras: list[UUID] | list[Camera]
     thana: str
     images: str
 

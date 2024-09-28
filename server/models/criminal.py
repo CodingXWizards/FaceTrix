@@ -4,6 +4,7 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID
 
+from .detected import detected
 from db import Base
 
 class Criminal(Base):
@@ -17,7 +18,8 @@ class Criminal(Base):
     location = Column(String,index=True)
     thana = Column(String,index=True)
     images = Column(String,index=True)
-    cameras = relationship("Camera", back_populates='criminal')
+
+    cameras = relationship("Camera", secondary=detected, back_populates="criminals")
 
     @hybrid_property
     def public_data(self):
@@ -28,7 +30,6 @@ class Criminal(Base):
             "date": self.date,
             "time": self.time,
             "location":self.location,
-            "cameras":self.cameras,
             "thana":self.thana,
             "images":self.images
         }
