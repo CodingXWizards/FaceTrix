@@ -6,6 +6,7 @@ import Login from '@/pages/Login.vue';
 import Camera from '@/pages/Camera.vue';
 import WhatsappBot from '@/pages/WhatsappBot.vue';
 import Criminal from '@/pages/Criminal.vue';
+import RealtimeTracking from './pages/RealtimeTracking.vue';
 
 interface Routes {
     path: string;
@@ -32,7 +33,11 @@ const routes: Routes[] = [
       {
         path: '/criminal',
       component: Criminal,
-      }
+    },
+    {
+        path: '/realtime-tracking',
+        component: RealtimeTracking
+    }
 ];
 
 const router = createRouter({

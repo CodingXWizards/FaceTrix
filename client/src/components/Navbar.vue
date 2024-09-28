@@ -39,6 +39,7 @@ function openTrackflix() {
       <RouterLink to="/whatsapp-bot" class="nav-link">Whatsapp Bot</RouterLink>
       <RouterLink to="/criminal" class="nav-link">Criminal</RouterLink>
       <button class="nav-link" @click="openTrackflix">Trackflix</button>
+      <RouterLink to="/realtime-tracking" class="nav-link">Realtime Tracking</RouterLink>
       <button class="p-2 px-4 bg-red-600 rounded-lg text-white text-sm" @click="handleLogout">
         Logout
       </button>
@@ -48,10 +49,10 @@ function openTrackflix() {
 
 <style scoped>
 .nav-link {
-  @apply text-gray-700 hover:text-orange-500 transition-colors;
+  @apply text-gray-700 hover:text-orange-600 transition-colors;
 }
 
 .router-link-active {
-  @apply text-orange-500 font-semibold;
+  @apply text-orange-600;
 }
 </style>
