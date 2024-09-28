@@ -18,6 +18,10 @@ async function handleLogout() {
     console.log(error);
   }
 }
+
+function openTrackflix() {
+  window.open("http://localhost:5174", "_blank");
+}
 </script>
 
 <template>
@@ -34,6 +38,7 @@ async function handleLogout() {
       <RouterLink to="/camera" class="nav-link">Camera</RouterLink>
       <RouterLink to="/whatsapp-bot" class="nav-link">Whatsapp Bot</RouterLink>
       <RouterLink to="/criminal" class="nav-link">Criminal</RouterLink>
+      <button class="nav-link" @click="openTrackflix">Trackflix</button>
       <button class="p-2 px-4 bg-red-600 rounded-lg text-white text-sm" @click="handleLogout">
         Logout
       </button>
