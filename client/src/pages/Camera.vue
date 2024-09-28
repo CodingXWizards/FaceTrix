@@ -6,7 +6,7 @@ import Navbar from "@/components/Navbar.vue";
 import { useFetch } from "@/composables/useFetch";
 import { Camera } from "@/types/camera";
 import { Marker } from "@/types/marker";
-import { LucideEye, LucidePlus } from "lucide-vue-next";
+import { LucideEye, LucidePlus, Search } from "lucide-vue-next";
 import { onMounted, ref, watch } from "vue";
 
 const activeSection = ref<'VIEW' | 'ADD' | 'UPDATE'>('VIEW');
@@ -19,6 +19,8 @@ function handleUpdate({ newLat, newLng }: { newLat: number, newLng: number }) {
 }
 
 const markers = ref<Marker[]>([]);
+const search = ref<HTMLInputElement | null>(null);
+const searchQuery = ref<string>('');
 
 const { data: cameras, isLoading, fetchData } = useFetch<Camera[]>('/api/camera/', { method: 'GET' });
 
@@ -30,7 +32,24 @@ watch(cameras, (newValue, _) => {
     if (newValue && newValue.length > 0) {
         markers.value = newValue.map((camera: Camera) => ({ id: camera.id, latitude: camera.latitude, longitude: camera.longitude, azimuth: camera.azimuth }));
     }
-})
+});
+
+async function handleSearch(e: KeyboardEvent) {
+    if (e.key !== 'Enter') return;
+    const [lat, lon, radius] = searchQuery.value.split(',');
+    try {
+        const response = await fetch(`http://localhost:8000/api/camera/search-azimuth`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ lat, lon, radius })
+        });
+        const body = await response.json();
+        cameras.value = body.matching_camera_ids;
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 </script>
 
@@ -38,8 +57,15 @@ watch(cameras, (newValue, _) => {
     <main>
         <Navbar />
         <section>
-            <header class="flex justify-between items-center">
+            <header class="flex justify-between items-center orange-500">
                 <h2>Camera</h2>
+                <div @click="search?.focus()" id="search" class="border rounded-lg flex p-2 px-3 items-center gap-x-2">
+                    <label for="search">
+                        <Search class="size-5" />
+                    </label>
+                    <input v-on:keypress="handleSearch" ref="search" v-model="searchQuery" id="search" type="search"
+                        class="focus:outline-none" placeholder="Lat, Lng, Radius">
+                </div>
                 <div class="flex gap-x-4">
                     <LucidePlus @click="activeSection = 'ADD'"
                         :class="'p-2 size-9 text-white rounded-md ' + (activeSection === 'ADD' ? 'bg-gray-800 hover:bg-opacity-100' : 'bg-orange-600 hover:bg-opacity-90')" />
@@ -63,5 +89,11 @@ watch(cameras, (newValue, _) => {
 </template>
 
 <style scoped>
-/* You can add any additional styles for the map container here if needed */
+#search {
+    border-color: #9ca3af !important;
+}
+
+#search:focus-within {
+    border-color: #f97316 !important;
+}
 </style>

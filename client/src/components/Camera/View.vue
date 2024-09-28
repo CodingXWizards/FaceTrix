@@ -34,9 +34,9 @@ defineProps<{
                     <td>{{ camera.azimuth }}</td>
                     <td>{{ camera.thana }}</td>
                     <td>
-                        <p :style='camera.status.toUpperCase() === "ACTIVE" ? "background-color: #86efac; color: #16a34a; border-color: #16a34a" : "background-color: #fca5a5; color: #dc2626; border-color: #dc2626"'
+                        <p :style='camera.status === "ACTIVE" ? "background-color: #86efac; color: #16a34a; border-color: #16a34a" : "background-color: #fca5a5; color: #dc2626; border-color: #dc2626"'
                             class='p-2 px-2 h-7 flex border red-300 items-center justify-center font- rounded'>
-                            {{ camera.status.toUpperCase() }}</p>
+                            {{ camera.status }}</p>
                     </td>
                 </tr>
             </tbody>
