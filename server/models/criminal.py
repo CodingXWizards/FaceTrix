@@ -12,7 +12,7 @@ class Criminal(Base):
 
     id = Column(UUID(as_uuid=True), primary_key=True, index=True, default=uuid4)
     criminalname = Column(String,index=True)
-    crimes = Column(Integer,index=True)
+    crimes = Column(String,index=True)
     date = Column(Date,index=True)
     time = Column(Time,index=True)
     location = Column(String,index=True)

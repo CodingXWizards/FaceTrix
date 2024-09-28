@@ -11,10 +11,8 @@ class CriminalSchema(BaseModel):
     time: time
     location: str
     thana: str
-    images: str
-
-class CriminalResponse(CriminalSchema):
-    id: UUID
 
     class Config:
-        orm_mode = True
+        from_attributes=True
+class CriminalResponse(CriminalSchema):
+    id: UUID
