@@ -15,6 +15,7 @@ psycopg2-binary = "*"
 passlib = "*"
 bcrypt = "*"
 python-multipart = "*"
+shapely = "*"
 
 [dev-packages]
 

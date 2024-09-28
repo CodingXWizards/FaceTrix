@@ -21,3 +21,8 @@ class Camera(BaseModel):
     azimuth: int
     status: Status
     thana: str
+
+class Search(BaseModel):
+    lat: float
+    lon: float
+    radius: float
